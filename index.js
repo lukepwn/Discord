@@ -3,6 +3,8 @@ const bot = new Client();
 
 const token = require('dotenv').config();
 const PREFIX = '!';
+const talkedRecently = new Set();
+const andy = bot.emojis.find(emoji => emoji.name === "andy");
 
 bot.on('ready', () => {
 	console.log('This bot is online.');
@@ -15,6 +17,7 @@ bot.on('message', message => {
 
 	let args = message.content.substring(PREFIX.length).split(" ");
 	let args2 = message.content;
+	let result = Math.round(5 / (Math.random() * 5 + 1));
 	//console.log(args);
 	//console.log(args2);
 
@@ -22,16 +25,17 @@ bot.on('message', message => {
 		
 
 		case 'help': 
-			message.author.send("Bootleg Nitro By Lukepwn. Available Commands: \n\
+			message.author.send("Bootleg Nitro By Lukepwn. Writing any of these commands with the prefix ':', will also work. \n\
+			Available Commands: \n\
 			!help - List Commands \n\
-			!gome - Go You! \n\
-			!bandy - It's Andy.. \n\
-			!ohyeah - Gachibass \n\
-			!empty - :empty \n\
-			!mthhic - :mthhic \n\
-			!ooo - :ooonoellebis \n\
-			!magik - :magik \n\
-			!woke - :woke.gif \n\
+			!gome - Go You! ; !bandy - It's Andy.. \n\
+			!ohyeah - Gachibass ; !empty - :empty \n\
+			!mthhic - :mthhic ; !ooo - :ooonoellebis \n\
+			!magik - :magik ; !77 - :77head \n\
+			!xing || !qui - :xingqui ; !where - :wheredidouremotesgo \n\
+			!stonk - :stonks ; !magikm - :magikman.gif \n\
+			!woke - :woke.gif ; !pickle - pickle.gif \n\n\
+			!domain - Depict your artifact RNG \n\
 			!clear - (Mods) Clear Message \n\
 			If you got a spare Nitro Boost, consider Boosting PWN Server! Thank You \
 			");
@@ -82,23 +86,66 @@ bot.on('message', message => {
 
 		case 'bandy':
 			//if(!message.member.roles.find(r => r.name === "Mods")) return
-			const andy = bot.emojis.find(emoji => emoji.name === "andy");
 			message.channel.sendMessage('B' + `${andy}` + 'A' + `${andy}` + 'N' + `${andy}` + 'D' + `${andy}` + 'Y');
 			//message.delete(3000).catch (console.error);
 			break;
 
-		case 'suggest':
-			let msgSuggest = args.slice(1).join(" ");
+		case 'domain':
 			
-			const EmbedSuggest = new RichEmbed()
-			.setColor(0xffffff)
-			.setTitle(message.member.user.tag)
-			.setDescription(msgSuggest);
+			const blonk = bot.emojis.find(emoji => emoji.name === "blonk");
+			const threedee = bot.emojis.find(emoji => emoji.name === "3d");
+			const god = bot.emojis.find(emoji => emoji.name === "BecomeGod");
+
+			if (talkedRecently.has(message.author.id)) {
+				message.channel.send("Try again tomorrow - " + message.author);
+			} else {
+
+				// Adds the user to the set so that they can't talk for a minute
+				talkedRecently.add(message.author.id);
+				setTimeout(() => {
+					// Removes the user from the set after a minute
+					talkedRecently.delete(message.author.id);
+				}, 43200000);
 			
-			message.guild.channels.find("name", "suggestions").send(EmbedSuggest);
-			message.guild.channels.find("name", "suggestions").send("<@151490906728431616>");
-			message.delete(3000).catch (console.error);
+
+				switch (result) {
+					case 1:
+						message.channel.sendMessage("LMAOOO just use your resin someplace else " 
+						+ "https://tenor.com/view/piclel-dancing-happy-gif-14688401" );
+						break;
+
+					case 2:
+						message.channel.sendMessage("enjoy your noob rolls " + `${blonk}`);
+						break;
+
+					case 3:
+						message.channel.sendMessage("good main stat but those subs... yikes "+ `${threedee}`);
+						break;
+
+					case 4:
+						message.channel.sendMessage("wtf... run domain now for andy artifacts  " + `${andy}`);
+						break;
+
+					case 5:
+						message.channel.sendMessage("GO RUN DOMAIN NOW FOR YOUR GOD ROLL " + `${god}`);
+						break;
+				}
+			}
 			break;
+		
+
+		// case 'suggest':
+		// 	let msgSuggest = args.slice(1).join(" ");
+			
+		// 	const EmbedSuggest = new RichEmbed()
+		// 	.setColor(0xffffff)
+		// 	.setTitle(message.member.user.tag)
+		// 	.setDescription(msgSuggest);
+			
+		// 	message.guild.channels.find("name", "suggestions").send(EmbedSuggest);
+		// 	message.guild.channels.find("name", "suggestions").send("<@151490906728431616>");
+		// 	message.delete(3000).catch (console.error);
+		// 	break;
 
 		case 'ohyeah':
 			const bass = bot.emojis.find(emoji => emoji.name === "gachiBASS");
@@ -106,36 +153,36 @@ bot.on('message', message => {
 			message.delete(3000).catch (console.error);
 			break;
 			
-		case 'helpme':
-			let msgHelp = args.slice(1).join(" ");
-			//if (message.attachements.size > 0) {
-			var Attachment = (message.attachments).array();
+		// case 'helpme':
+		// 	let msgHelp = args.slice(1).join(" ");
+		// 	//if (message.attachements.size > 0) {
+		// 	var Attachment = (message.attachments).array();
 
-			if ((Attachment.length) > 0) {
+		// 	if ((Attachment.length) > 0) {
 			
-				const EmbedHelp = new RichEmbed()
-				.setColor(0xffffff)
-				.setTitle(message.member.user.tag)
-				.setDescription(msgHelp)
-				.setImage(Attachment[0].url);
+		// 		const EmbedHelp = new RichEmbed()
+		// 		.setColor(0xffffff)
+		// 		.setTitle(message.member.user.tag)
+		// 		.setDescription(msgHelp)
+		// 		.setImage(Attachment[0].url);
 				
-				message.guild.channels.find("name", "advice-and-help").send("<@151490906728431616>");
-				message.guild.channels.find("name", "advice-and-help").send(EmbedHelp);
+		// 		message.guild.channels.find("name", "advice-and-help").send("<@151490906728431616>");
+		// 		message.guild.channels.find("name", "advice-and-help").send(EmbedHelp);
 				
-				message.delete(3000).catch (console.error);
-				break;
-			}
+		// 		message.delete(3000).catch (console.error);
+		// 		break;
+		// 	}
 			
-			else {
-				const EmbedHelp = new RichEmbed()
-				.setColor(0xffffff)
-				.setTitle(message.member.user.tag)
-				.setDescription(msgHelp)
+		// 	else {
+		// 		const EmbedHelp = new RichEmbed()
+		// 		.setColor(0xffffff)
+		// 		.setTitle(message.member.user.tag)
+		// 		.setDescription(msgHelp)
 				
-				message.guild.channels.find("name", "advice-and-help").send(EmbedHelp);
-				message.delete(3000).catch (console.error);
-				break;
-			}
+		// 		message.guild.channels.find("name", "advice-and-help").send(EmbedHelp);
+		// 		message.delete(3000).catch (console.error);
+		// 		break;
+		// 	}
 		
 		case 'poll':
 			if(!message.member.roles.find(r => r.name === "Mods")) return
@@ -226,6 +273,13 @@ bot.on('message', message => {
 
 			else if(message.content.toLowerCase().includes (':where'))
 				message.channel.send({files: ['emotes/where.png']});
+
+			else if(message.content.toLowerCase().includes (':stonk'))
+				message.channel.send({files: ['emotes/stonks.png']});
+
+			else if(message.content.toLowerCase().includes ('pickle'))
+				message.channel.send("https://tenor.com/view/piclel-dancing-happy-gif-14688401");
+				
 		
 	}
 		
