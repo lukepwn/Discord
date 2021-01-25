@@ -4,7 +4,7 @@ const bot = new Client();
 const token = require('dotenv').config();
 const PREFIX = '!';
 const talkedRecently = new Set();
-const andy = bot.emojis.find(emoji => emoji.name === "andy");
+
 
 bot.on('ready', () => {
 	console.log('This bot is online.');
@@ -14,7 +14,7 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
 
-
+	let andy = bot.emojis.find(emoji => emoji.name === "andy");
 	let args = message.content.substring(PREFIX.length).split(" ");
 	let args2 = message.content;
 	let result = Math.round(5 / (Math.random() * 5 + 1));
@@ -25,19 +25,19 @@ bot.on('message', message => {
 		
 
 		case 'help': 
-			message.author.send("Bootleg Nitro By Lukepwn. Writing any of these commands with the prefix ':', will also work. \n\
-			Available Commands: \n\
-			!help - List Commands \n\
-			!gome - Go You! ; !bandy - It's Andy.. \n\
-			!ohyeah - Gachibass ; !empty - :empty \n\
-			!mthhic - :mthhic ; !ooo - :ooonoellebis \n\
-			!magik - :magik ; !77 - :77head \n\
-			!xing || !qui - :xingqui ; !where - :wheredidouremotesgo \n\
-			!stonk - :stonks ; !magikm - :magikman.gif \n\
-			!woke - :woke.gif ; !pickle - pickle.gif \n\n\
-			!domain - Depict your artifact RNG \n\
-			!clear - (Mods) Clear Message \n\
-			If you got a spare Nitro Boost, consider Boosting PWN Server! Thank You \
+			message.author.send(">>> ``` Bootleg Nitro By Lukepwn. Writing any of these commands with the prefix ':', will also work. \n\
+ Available Commands: ``` \n\
+			`!help` - List Commands \n\
+			`!gome` - Go You! ; `!bandy` - It's Andy.. \n\
+			`!ohyeah` - Gachibass ; `!empty` - :empty \n\
+			`!mthhic` - :mthhic ; `!ooo` - :ooonoellebis \n\
+			`!magik` - :magik ; `!77` - :77head \n\
+			`!xing` || `!qui` - :xingqui ; `!where` - :wheredidouremotesgo \n\
+			`!stonk` - :stonks ; `!magikm` - :magikman.gif \n\
+			`!woke` - :woke.gif ; `!pickle` - pickle.gif \n\n\
+			`!domain` - Depict your artifact RNG \n\
+			`!clear` - (Mods) Clear Message \n\
+			``` If you got a spare Nitro Boost, consider Boosting PWN Server! Thank You! ``` \
 			");
 
 			message.delete(1000).catch (console.error);
@@ -96,38 +96,45 @@ bot.on('message', message => {
 			const threedee = bot.emojis.find(emoji => emoji.name === "3d");
 			const god = bot.emojis.find(emoji => emoji.name === "BecomeGod");
 
+			// timeout every 6hrs
+			var timeout = setTimeout(() => {}, 21600000);
+
+			function getTimeLeft(timeout) {
+				var minutes = Math.ceil((timeout._idleTimeout - timeout._idleStart)/(1000*60));
+				return console.log(minutes);
+			}
+
 			if (talkedRecently.has(message.author.id)) {
-				message.channel.send("Try again tomorrow - " + message.author);
+				message.channel.send("Try again in: " + getTimeLeft(timeout) + "minutes " + message.author);
 			} else {
 
-				// Adds the user to the set so that they can't talk for a minute
 				talkedRecently.add(message.author.id);
 				setTimeout(() => {
-					// Removes the user from the set after a minute
+					// Removes the user from the set after 12hrs
 					talkedRecently.delete(message.author.id);
 				}, 43200000);
 			
 
 				switch (result) {
 					case 1:
-						message.channel.sendMessage("LMAOOO just use your resin someplace else " 
+						message.channel.sendMessage(message.author + " LMAOOO just use your resin someplace else " 
 						+ "https://tenor.com/view/piclel-dancing-happy-gif-14688401" );
 						break;
 
 					case 2:
-						message.channel.sendMessage("enjoy your noob rolls " + `${blonk}`);
+						message.channel.sendMessage(message.author + " enjoy your noob rolls " + `${blonk}`);
 						break;
 
 					case 3:
-						message.channel.sendMessage("good main stat but those subs... yikes "+ `${threedee}`);
+						message.channel.sendMessage(message.author + " good main stat but those subs... yikes "+ `${threedee}`);
 						break;
 
 					case 4:
-						message.channel.sendMessage("wtf... run domain now for andy artifacts  " + `${andy}`);
+						message.channel.sendMessage(message.author + " wtf... run domain now for andy artifacts  " + `${andy}`);
 						break;
 
 					case 5:
-						message.channel.sendMessage("GO RUN DOMAIN NOW FOR YOUR GOD ROLL " + `${god}`);
+						message.channel.sendMessage(message.author + " GO RUN DOMAIN NOW FOR YOUR GOD ROLL " + `${god}`);
 						break;
 				}
 			}
@@ -262,7 +269,10 @@ bot.on('message', message => {
 			else if(message.content.toLowerCase().includes (':77'))
 				message.channel.send({files: ['emotes/77head.png']});
 
-			else if(message.content.toLowerCase().includes (':xing' || ':qui'))
+			else if(message.content.toLowerCase().includes (':xing'))
+				message.channel.send({files: ['emotes/xingqui.png']});
+
+			else if(message.content.toLowerCase().includes (':qui'))
 				message.channel.send({files: ['emotes/xingqui.png']});
 
 			else if(message.content.toLowerCase().includes (':ditto'))
@@ -275,11 +285,7 @@ bot.on('message', message => {
 				message.channel.send({files: ['emotes/where.png']});
 
 			else if(message.content.toLowerCase().includes (':stonk'))
-				message.channel.send({files: ['emotes/stonks.png']});
-
-			else if(message.content.toLowerCase().includes ('pickle'))
-				message.channel.send("https://tenor.com/view/piclel-dancing-happy-gif-14688401");
-				
+				message.channel.send({files: ['emotes/stonks.png']});				
 		
 	}
 		
