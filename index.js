@@ -1,13 +1,17 @@
 const { Client, RichEmbed, MessageEmbedField } = require('discord.js');
+const memberCount = require ('./member-count');
 const bot = new Client();
 
 const token = require('dotenv').config();
-const PREFIX = '!';
+const PREFIX = ':';
 const talkedRecently = new Set();
 
 
 bot.on('ready', () => {
 	console.log('This bot is online.');
+
+	//call functions
+	memberCount(bot);
 })
 
 
@@ -18,8 +22,7 @@ bot.on('message', message => {
 	let args = message.content.substring(PREFIX.length).split(" ");
 	let args2 = message.content;
 	let result = Math.round(5 / (Math.random() * 5 + 1));
-	//console.log(args);
-	//console.log(args2);
+	// console.log(args);
 
 	switch (args[0]) {
 		
@@ -32,7 +35,9 @@ bot.on('message', message => {
 			`!ohyeah` - Gachibass ; `!empty` - :empty \n\
 			`!mthhic` - :mthhic ; `!ooo` - :ooonoellebis \n\
 			`!magik` - :magik ; `!77` - :77head \n\
-			`!xing` || `!qui` - :xingqui ; `!where` - :wheredidouremotesgo \n\
+			`!xing` || `!qui` - :xingqui \n\
+			`!where` - :wheredidouremotesgo \n\
+			`!aaa` - :aaa ; \n\ `!magique` - :magique \n\
 			`!stonk` - :stonks ; `!magikm` - :magikman.gif \n\
 			`!woke` - :woke.gif ; `!pickle` - pickle.gif \n\n\
 			`!domain` - Depict your artifact RNG \n\
@@ -93,7 +98,7 @@ bot.on('message', message => {
 		case 'domain':
 			
 			const blonk = bot.emojis.find(emoji => emoji.name === "blonk");
-			const threedee = bot.emojis.find(emoji => emoji.name === "3d");
+			const kirby = bot.emojis.find(emoji => emoji.name === "kirbylmao");
 			const god = bot.emojis.find(emoji => emoji.name === "BecomeGod");
 
 			// timeout every 6hrs
@@ -101,19 +106,13 @@ bot.on('message', message => {
 
 			function getTimeLeft(timeout) {
 				var minutes = Math.ceil((timeout._idleTimeout - timeout._idleStart)/(1000*60));
-				return console.log(minutes);
+				return minutes;
 			}
 
 			if (talkedRecently.has(message.author.id)) {
-				message.channel.send("Try again in: " + getTimeLeft(timeout) + "minutes " + message.author);
-			} else {
-
-				talkedRecently.add(message.author.id);
-				setTimeout(() => {
-					// Removes the user from the set after 12hrs
-					talkedRecently.delete(message.author.id);
-				}, 43200000);
-			
+				message.channel.send("Try again in: " + getTimeLeft(timeout) + " minutes " + message.author);
+			} 
+			else {
 
 				switch (result) {
 					case 1:
@@ -122,75 +121,43 @@ bot.on('message', message => {
 						break;
 
 					case 2:
-						message.channel.sendMessage(message.author + " enjoy your noob rolls " + `${blonk}`);
+						message.channel.sendMessage(message.author + ", enjoy your noob rolls " + `${blonk}`);
 						break;
 
 					case 3:
-						message.channel.sendMessage(message.author + " good main stat but those subs... yikes "+ `${threedee}`);
+						message.channel.sendMessage(message.author + ", come back when you're a little... mmmm..... richer! "+ `${kirby}`);
 						break;
 
 					case 4:
-						message.channel.sendMessage(message.author + " wtf... run domain now for andy artifacts  " + `${andy}`);
+						message.channel.sendMessage(message.author + ", wtf... run domain now for andy artifacts  " + `${andy}`);
 						break;
 
 					case 5:
-						message.channel.sendMessage(message.author + " GO RUN DOMAIN NOW FOR YOUR GOD ROLL " + `${god}`);
+						message.channel.sendMessage(message.author + ", GO RUN DOMAIN NOW FOR YOUR GOD ROLL " + `${god}` + `${god}` + `${god}`);
 						break;
 				}
+
+				talkedRecently.add(message.author.id);
+				setTimeout(() => {
+					// Removes the user from the set after 12hrs
+					talkedRecently.delete(message.author.id);
+				}, 43200000);
+				
 			}
 			break;
-		
-
-		// case 'suggest':
-		// 	let msgSuggest = args.slice(1).join(" ");
-			
-		// 	const EmbedSuggest = new RichEmbed()
-		// 	.setColor(0xffffff)
-		// 	.setTitle(message.member.user.tag)
-		// 	.setDescription(msgSuggest);
-			
-		// 	message.guild.channels.find("name", "suggestions").send(EmbedSuggest);
-		// 	message.guild.channels.find("name", "suggestions").send("<@151490906728431616>");
-		// 	message.delete(3000).catch (console.error);
-		// 	break;
 
 		case 'ohyeah':
 			const bass = bot.emojis.find(emoji => emoji.name === "gachiBASS");
 			message.channel.sendMessage(`${bass}` + `${bass}` + `${bass}` + `${bass}` + `${bass}`);
 			message.delete(3000).catch (console.error);
 			break;
-			
-		// case 'helpme':
-		// 	let msgHelp = args.slice(1).join(" ");
-		// 	//if (message.attachements.size > 0) {
-		// 	var Attachment = (message.attachments).array();
-
-		// 	if ((Attachment.length) > 0) {
-			
-		// 		const EmbedHelp = new RichEmbed()
-		// 		.setColor(0xffffff)
-		// 		.setTitle(message.member.user.tag)
-		// 		.setDescription(msgHelp)
-		// 		.setImage(Attachment[0].url);
-				
-		// 		message.guild.channels.find("name", "advice-and-help").send("<@151490906728431616>");
-		// 		message.guild.channels.find("name", "advice-and-help").send(EmbedHelp);
-				
-		// 		message.delete(3000).catch (console.error);
-		// 		break;
-		// 	}
-			
-		// 	else {
-		// 		const EmbedHelp = new RichEmbed()
-		// 		.setColor(0xffffff)
-		// 		.setTitle(message.member.user.tag)
-		// 		.setDescription(msgHelp)
-				
-		// 		message.guild.channels.find("name", "advice-and-help").send(EmbedHelp);
-		// 		message.delete(3000).catch (console.error);
-		// 		break;
-		// 	}
 		
+		case 'maint': 
+			if(!message.member.roles.find(r => r.name === "Mods")) return
+			message.channel.sendMessage("Pwnchan under maintenance...");
+			message.delete(100).catch (console.error);
+			break;
+
 		case 'poll':
 			if(!message.member.roles.find(r => r.name === "Mods")) return
 			let msgArgs = args.slice(1).join(" ");
@@ -285,7 +252,16 @@ bot.on('message', message => {
 				message.channel.send({files: ['emotes/where.png']});
 
 			else if(message.content.toLowerCase().includes (':stonk'))
-				message.channel.send({files: ['emotes/stonks.png']});				
+				message.channel.send({files: ['emotes/stonks.png']});
+
+			else if(message.content.toLowerCase().includes (':aaa'))
+				message.channel.send({files: ['emotes/aaa.png']});
+				
+			else if(message.content.toLowerCase().includes (':magiq'))
+				message.channel.send({files: ['emotes/magique.png']});	
+
+			else if(message.content.toLowerCase().includes (':amen'))
+				message.channel.send({files: ['emotes/ameno.png']});				
 		
 	}
 		
