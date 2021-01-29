@@ -18,7 +18,7 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
 
-	let andy = bot.emojis.find(emoji => emoji.name === "andy");
+	let andy = bot.emojis.cache.find(emoji => emoji.name === "andy");
 	let args = message.content.substring(PREFIX.length).split(" ");
 	let args2 = message.content;
 	let result = Math.round(5 / (Math.random() * 5 + 1));
@@ -91,7 +91,7 @@ bot.on('message', message => {
 
 		case 'bandy':
 			//if(!message.member.roles.find(r => r.name === "Mods")) return
-			message.channel.sendMessage('B' + `${andy}` + 'A' + `${andy}` + 'N' + `${andy}` + 'D' + `${andy}` + 'Y');
+			message.channel.send('B' + `${andy}` + 'A' + `${andy}` + 'N' + `${andy}` + 'D' + `${andy}` + 'Y');
 			//message.delete(3000).catch (console.error);
 			break;
 

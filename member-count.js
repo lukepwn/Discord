@@ -17,5 +17,5 @@ module.exports = (bot) => {
     }
 
     const guild = bot.guilds.cache.get("683432447039504393")
-    updateMembers(guild);
+    setTimeout(updateMembers(guild), 300000)
 }
